@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection {
+  background: #2dd4bf;
+  color: #0a0e0f;
+}
+
+body {
+  background-image: radial-gradient(circle at 1px 1px, #14201f 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.terminal-panel {
+  background: #0f1517;
+  border: 1px solid #1c2628;
+}
+
+.terminal-panel:hover {
+  border-color: #2dd4bf33;
+}

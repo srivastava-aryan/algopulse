@@ -1,0 +1,33 @@
+// Major DSA topics worth deliberate coverage, using LeetCode's own tag
+// naming so they line up exactly with what /api/topics returns. Used to
+// show gaps (topics with zero solves) alongside topics you've touched.
+export const CORE_DSA_TOPICS = [
+  "Array",
+  "String",
+  "Hash Table",
+  "Two Pointers",
+  "Sliding Window",
+  "Sorting",
+  "Binary Search",
+  "Stack",
+  "Queue",
+  "Linked List",
+  "Tree",
+  "Binary Tree",
+  "Binary Search Tree",
+  "Heap (Priority Queue)",
+  "Graph",
+  "Depth-First Search",
+  "Breadth-First Search",
+  "Union Find",
+  "Trie",
+  "Backtracking",
+  "Dynamic Programming",
+  "Greedy",
+  "Divide and Conquer",
+  "Recursion",
+  "Bit Manipulation",
+  "Math",
+  "Matrix",
+  "Design",
+] as const;

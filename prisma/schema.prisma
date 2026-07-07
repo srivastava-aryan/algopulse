@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model Question {
+  id         String     @id @default(cuid())
+  title      String
+  slug       String     @unique // leetcode url slug, e.g. "two-sum"
+  url        String
+  difficulty Difficulty
+  notes      String?
+  topics     Topic[]    @relation("QuestionTopics")
+  solveLogs  SolveLog[]
+  createdAt  DateTime   @default(now())
+}
+
+model Topic {
+  id        String     @id @default(cuid())
+  name      String     @unique // "Dynamic Programming", "Graphs", etc.
+  questions Question[] @relation("QuestionTopics")
+}
+
+model SolveLog {
+  id            String     @id @default(cuid())
+  question      Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId    String
+  firstSolvedAt DateTime   @default(now())
+  revisions     Revision[]
+
+  @@index([questionId])
+}
+
+model Revision {
+  id          String    @id @default(cuid())
+  solveLog    SolveLog  @relation(fields: [solveLogId], references: [id], onDelete: Cascade)
+  solveLogId  String
+  dueDate     DateTime
+  completedAt DateTime?
+  confidence  Int? // 1-5, filled in once actually revised
+  intervalDay Int // 1, 7, or 14 - which checkpoint this is
+
+  @@index([solveLogId])
+  @@index([dueDate])
+}
