@@ -79,6 +79,8 @@ export default function DashboardPage() {
   const [preview, setPreview] = useState<LeetCodeMeta | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [previewError, setPreviewError] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   // Debounced auto-fill: as soon as the pasted URL looks like a valid LeetCode
   // problem link, fetch its metadata for preview (title/difficulty/topics)
@@ -165,6 +167,17 @@ export default function DashboardPage() {
       body: JSON.stringify({ confidence }),
     });
     await loadQuestions();
+  }
+
+  async function handleDeleteQuestion(id: string) {
+    setDeletingId(id);
+    try {
+      await fetch(`/api/questions/${id}`, { method: "DELETE" });
+      setConfirmDeleteId(null);
+      await loadQuestions();
+    } finally {
+      setDeletingId(null);
+    }
   }
 
   // Flatten all pending (not completed) revisions across all questions, sorted by due date.
@@ -333,11 +346,40 @@ export default function DashboardPage() {
                   >
                     {q.title}
                   </a>
-                  <span
-                    className={`text-xs border rounded px-2 py-0.5 ${DIFFICULTY_STYLES[q.difficulty]}`}
-                  >
-                    {q.difficulty.toLowerCase()}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`text-xs border rounded px-2 py-0.5 ${DIFFICULTY_STYLES[q.difficulty]}`}
+                    >
+                      {q.difficulty.toLowerCase()}
+                    </span>
+                    {confirmDeleteId === q.id ? (
+                      <span className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleDeleteQuestion(q.id)}
+                          disabled={deletingId === q.id}
+                          className="text-xs text-hard border border-hard/40 rounded px-2 py-0.5 hover:bg-hard/10 transition-colors disabled:opacity-50"
+                        >
+                          {deletingId === q.id
+                            ? "deleting..."
+                            : "confirm delete"}
+                        </button>
+                        <button
+                          onClick={() => setConfirmDeleteId(null)}
+                          className="text-xs text-dim border border-line rounded px-2 py-0.5 hover:text-cyan transition-colors"
+                        >
+                          cancel
+                        </button>
+                      </span>
+                    ) : (
+                      <button
+                        onClick={() => setConfirmDeleteId(q.id)}
+                        title="delete this question and all its revision history"
+                        className="text-xs text-dim border border-line rounded px-2 py-0.5 hover:text-hard hover:border-hard/40 transition-colors"
+                      >
+                        delete
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-1 mt-2">
                   {q.topics.map((t) => (
