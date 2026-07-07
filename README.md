@@ -99,3 +99,10 @@ visualize, then we'll build those two.
 
 Addition of url search with ongoing problem status.
 on typing url of a question it automatically verifies and shows up on the screen
+
+## Phase 4 
+
+Planned implementation of chrome extension (manifestV3).
+Extension is used for tracking question status and it automatically detects (Solved status) 
+This will be implemented in future. 
+
