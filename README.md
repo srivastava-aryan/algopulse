@@ -94,3 +94,8 @@ dsa-tracker/
 Calendar and heatmap views — both are pure read/aggregate queries once you've got real data in
 here, no new scheduling logic needed. Solve a handful of problems first so there's something to
 visualize, then we'll build those two.
+
+## Phase 3 
+
+Addition of url search with ongoing problem status.
+on typing url of a question it automatically verifies and shows up on the screen
