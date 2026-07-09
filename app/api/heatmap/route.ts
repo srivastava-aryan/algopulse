@@ -1,6 +1,7 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { dateKey } from '@/lib/dateKey';
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { dateKey } from "@/lib/dateKey";
+export const dynamic = "force-dynamic";
 
 // GET /api/heatmap
 // Returns a day-by-day activity count: a "solve" (new SolveLog) and a
