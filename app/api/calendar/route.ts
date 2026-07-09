@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { dateKey } from "@/lib/dateKey";
+export const dynamic = "force-dynamic";
 
 // GET /api/calendar?month=YYYY-MM
 // Returns, for every day in that month, what was first-solved that day and
